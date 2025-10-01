@@ -47,6 +47,47 @@ If the graph indicates anything sound-related (like “thunder”, “waves cras
 It produces **environmental audio snippets or sound effects** that bring the scene to life.  
 For example: if your input says *“thunderstorm”*, you’ll get not just the picture of the storm, but also the **sound of thunder** to go with it.  
 
+## 🔄 How Data Flows  
+
+This project follows a **step-by-step multimodal pipeline**, where text is first understood, then structured, and finally transformed into visuals and sounds.  
+
+1. **User Prompt**  
+   - You provide a natural language input, e.g.:  
+     *“Show me a dramatic thunderstorm over a lighthouse and also provide how thunder sounds.”*  
+
+2. **Entity & Relation Extraction**  
+   - The text is passed to **Llama 3 via LangChain**.  
+   - The model extracts `(head, relation, tail)` triples like:  
+     - `thunderstorm → occurs over → lighthouse`  
+     - `thunderstorm → produces → thunder sound`  
+
+3. **Knowledge Graph Construction**  
+   - Triples are turned into a **graph** with `networkx`.  
+   - Nodes = entities (e.g., thunderstorm, lighthouse).  
+   - Edges = relationships (e.g., produces, occurs over).  
+   - This graph is also visualized so you can see what the system “understood”.  
+
+4. **Modality Decision**  
+   - Based on the graph:  
+     - If there are **visual entities/relations**, trigger **image generation**.  
+     - If there are **sound-related entities/relations**, trigger **audio generation**.  
+
+5. **Image Generation**  
+   - **Stable Diffusion (sd-turbo)** creates an image using structured graph prompts.  
+   - Example: A stormy sky above a lighthouse on a rugged coast.  
+
+6. **Audio Generation**  
+   - **MusicGen** generates an audio snippet matching the sound cues.  
+   - Example: A short thunderclap recording.  
+
+7. **Final Output**  
+   - The system produces a package of results:  
+     - **Knowledge Graph image** (what was understood).  
+     - **Generated Image** (visual scene).  
+     - **Generated Audio** (environmental sound).  
+
+📦 **End result:** You get a synchronized experience of structured reasoning (graph) + visual imagination (image) + audio ambience (sound).  
+
 
 ---
 
