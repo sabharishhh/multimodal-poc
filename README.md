@@ -1,4 +1,9 @@
-# Multimodal AI POC  
+# 🌐 Multimodal AI POC  
+
+![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)  
+![License](https://img.shields.io/badge/license-MIT-green.svg)  
+![HuggingFace](https://img.shields.io/badge/models-HuggingFace-orange.svg)  
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/)
 
 This repository contains a **proof-of-concept multimodal AI pipeline** that combines **knowledge graph extraction, text-to-image, and text-to-audio generation** into a single workflow.  
 
