@@ -14,71 +14,71 @@ The goal is to demonstrate how **structured reasoning (via knowledge graphs)** c
 ## ✨ Features  
 
 ### 🧠 Entity & Relation Extraction  
-- Extracts **structured knowledge** from text using **Llama 3 + LangChain**.  
-- Converts natural language into `(head → relation → tail)` triples.  
+- Uses **Llama 3 (via Ollama + LangChain)** to break your text into `(head → relation → tail)` triples.  
 - Example:  
   - `thunderstorm → occurs over → lighthouse`  
   - `thunderstorm → produces → thunder sound`  
 
 ### 📊 Knowledge Graph Visualization  
-- Builds a **knowledge graph** with `networkx`.  
-- Visualizes it using `matplotlib`.  
-- Provides **explainability** — you can see exactly what the AI understood before generation.  
+- Triples are converted into a **knowledge graph** using `networkx`.  
+- Visualized with `matplotlib` for transparency and explainability.  
 
 ### 🎨 Image Generation  
-- Detects visual cues in the graph.  
-- Generates images using **Stable Diffusion (sd-turbo)**.  
-- Ensures generated visuals are **faithful to the structured description**.  
+- **Stable Diffusion (sd-turbo)** generates images based on the **entities and relations** in the graph.  
+- Ensures visual output is **faithful to the structure** of the text.  
 
 ### 🔊 Audio Generation  
-- Detects sound-related cues in the graph.  
-- Uses **MusicGen (facebook/musicgen-small)** to generate **environmental sounds or music**.  
-- Example: A thunderstorm produces both a **visual storm scene** and the **sound of thunder**.  
+- **MusicGen (facebook/musicgen-small)** generates **sound effects or short audio clips**.  
+- Example: For “thunderstorm,” it produces **thunder sounds** to complement the generated image.  
 
 ---
 
-## 🏛️ Modules  
+## 🏛️ Architecture  
 
-The pipeline is modular, with each stage handling a distinct task:  
-
-1. **Input Module** – Accepts natural language user prompts.  
-2. **Reasoning Module** – Extracts triples via Llama 3 + LangChain.  
-3. **Knowledge Graph Module** – Builds and visualizes the graph.  
-4. **Decision Module** – Decides between image and/or audio generation.  
-5. **Image Generation Module** – Stable Diffusion creates visuals.  
-6. **Audio Generation Module** – MusicGen generates sounds.  
-7. **Output Module** – Packages graph, image, and audio into results.  
+1. **Input Module** → Accepts natural language prompts  
+2. **Reasoning Module** → Llama 3 + LangChain extract triples  
+3. **Knowledge Graph Module** → Builds/visualizes a graph  
+4. **Decision Module** → Chooses image and/or audio generation  
+5. **Image Generation Module** → Stable Diffusion produces visuals  
+6. **Audio Generation Module** → MusicGen produces sounds  
+7. **Output Module** → Packages results: graph PNG, generated image, audio file  
 
 ---
 
 ## 🔄 Data Flow  
 
-The system processes information step by step:  
-
-1. **User Prompt** – e.g.  
+1. **User Prompt** →  
    *“Show me a dramatic thunderstorm over a lighthouse and also provide how thunder sounds.”*  
-
-2. **Entity & Relation Extraction** – Extract triples:  
+2. **Triple Extraction** →  
    - `thunderstorm → occurs over → lighthouse`  
    - `thunderstorm → produces → thunder sound`  
-
-3. **Knowledge Graph Construction** – Build and visualize graph with entities + relations.  
-
-4. **Modality Decision** – Detect if image or audio generation is needed.  
-
-5. **Image Generation** – Stable Diffusion renders a storm scene over a lighthouse.  
-
-6. **Audio Generation** – MusicGen produces a thunder sound clip.  
-
-7. **Final Output** – You get:  
-   - Knowledge graph visualization.  
-   - Generated image.  
-   - Generated audio.  
+3. **Knowledge Graph** → nodes = entities, edges = relations  
+4. **Decision Logic** → detects visual & sound cues  
+5. **Generation** →  
+   - Image → Stable Diffusion  
+   - Audio → MusicGen  
+6. **Outputs** →  
+   - Graph (`kg_graph.png`)  
+   - Image (`generated.png`)  
+   - Audio (`generated.wav`)  
 
 ---
 
-## 🖼 Example  
+## ⚠️ Limitations  
 
-**Prompt:**  
-```text
-Show me a dramatic thunderstorm over a lighthouse and also provide how thunder sounds.
+- **Performance:** CPU inference works but is slow. GPU recommended (Colab/Kaggle free GPU).  
+- **Memory Usage:** Stable Diffusion may crash on GPUs < 6 GB VRAM unless reduced resolution/steps are used.  
+- **Audio Length:** MusicGen outputs are short clips (~10 seconds).  
+- **Extraction Accuracy:** Llama 3 triple extraction may misinterpret complex sentences.  
+- **Generative Fidelity:** Generated image/audio may not always perfectly match input prompt.  
+- **Infra Dependency:** Ollama is required locally for Llama 3; Colab setup is smoother.  
+
+---
+
+## ⚡ Quickstart  
+
+### Run Locally
+```bash
+git clone https://github.com/yourusername/multimodal-ai-poc.git
+cd multimodal-ai-poc
+pip install -r requirements.txt
