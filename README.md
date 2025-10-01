@@ -37,7 +37,7 @@ The goal is to demonstrate how **structured reasoning (via knowledge graphs)** c
 
 ---
 
-## 🏛️ Architecture  
+## 🏛️ Modules  
 
 The pipeline is modular, with each stage handling a distinct task:  
 
