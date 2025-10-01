@@ -11,15 +11,42 @@ The goal is to demonstrate how **structured reasoning (via knowledge graphs)** c
 
 ---
 
-## ✨ Features
-- **Entity & Relation Extraction**  
-  - Uses **Llama 3 (via Ollama + LangChain)** to extract `(head, relation, tail)` triples from natural language.  
-- **Knowledge Graph Visualization**  
-  - Builds graphs with `networkx` and visualizes them using `matplotlib`.  
-- **Image Generation**  
-  - Employs **Stable Diffusion (sd-turbo)** to generate images guided by graph entities and relations.  
-- **Audio Generation**  
-  - Leverages **MusicGen (facebook/musicgen-small)** to create environmental sounds or musical snippets.  
+## ✨ Features  
+
+### 🧠 Entity & Relation Extraction  
+The pipeline doesn’t just read your input like plain text—it **understands the structure**.  
+Using **Llama 3 with LangChain**, it breaks your description into `(head → relation → tail)` triples.  
+
+For example:  
+- `thunderstorm → occurs over → lighthouse`  
+- `thunderstorm → produces → thunder sound`  
+
+This structured representation helps the rest of the system know *what objects exist* and *how they are connected*.  
+
+---
+
+### 📊 Knowledge Graph Visualization  
+The extracted triples are turned into a **knowledge graph** using `networkx` and visualized with `matplotlib`.  
+Each entity becomes a node, and each relation is drawn as a labeled edge.  
+
+This makes the pipeline **explainable**—you can actually see what the AI understood before it generates images or sounds.  
+
+---
+
+### 🎨 Image Generation  
+With the knowledge graph in hand, the system knows which parts of your text should be treated as **visual elements** (like “thunderstorm” or “lighthouse”).  
+These cues are passed into **Stable Diffusion (sd-turbo)**, which generates an image that reflects both the entities *and* their relationships.  
+
+This ensures the image isn’t just random—it stays **faithful to the structure of your description**.  
+
+---
+
+### 🔊 Audio Generation  
+If the graph indicates anything sound-related (like “thunder”, “waves crashing”, or “birds singing”), the system activates **MusicGen (facebook/musicgen-small)**.  
+
+It produces **environmental audio snippets or sound effects** that bring the scene to life.  
+For example: if your input says *“thunderstorm”*, you’ll get not just the picture of the storm, but also the **sound of thunder** to go with it.  
+
 
 ---
 
